@@ -1,6 +1,6 @@
 import MonacoEditor, { Monaco } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export interface EditorContent {
   [x: string]: any;
@@ -13,7 +13,6 @@ export interface EditorProps {
 
 const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
-  const [content, setContent] = useState<EditorContent>({});
 
   const handleEditorMount = (
     editor: editor.IStandaloneCodeEditor,
@@ -24,12 +23,10 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
       if (!e.target.element?.classList.contains('detected-link')) return;
       onLinkClick((e.target.element as HTMLElement).innerText);
     });
-    // console.log(editor.getModel()?.getValue());
-    // editor.getModel()?.setValue('Hello World!');
   };
 
   useEffect(() => {
-    setContent(value);
+    editorRef.current?.getModel()?.setValue(JSON.stringify(value, null, 2));
   }, [value]);
 
   return (
@@ -37,7 +34,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
       <MonacoEditor
         height="100vh"
         defaultLanguage="json"
-        defaultValue={JSON.stringify(content, null, 2)}
+        defaultValue={''}
         theme="vs-dark"
         onMount={handleEditorMount}
       />

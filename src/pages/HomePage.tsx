@@ -1,20 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Editor } from '../components';
-import { getPosts } from '../utils/reddit';
+import { EditorContent } from '../components/Editor';
+import { getComments, getPosts, REDDIT_BASE_URL } from '../utils/reddit';
+
+const mapChildrenToPost = (children: any[]) => {
+  return children
+    .map((child) => child.data)
+    .map((child) => ({
+      title: child.title,
+      subreddit: child.subreddit_name_prefixed,
+      url: `${REDDIT_BASE_URL}/${child.subreddit_name_prefixed}/comments/${child.id}`,
+    }));
+};
 
 const HomePage: React.FC = () => {
-  console.log('test');
-
-  const content = {
-    title: 'Hello World',
-    value: 'https://google.com',
-  };
+  const [content, setContent] = useState<EditorContent>({});
 
   const handleLinkClick = (url: string) => {
-    console.log('onLinkClick', url);
+    getComments(url).then((res) => setContent(res));
   };
 
-  // getPosts().then((res) => console.log(res));
+  useEffect(() => {
+    getPosts().then((res) => {
+      const data = res.data.data;
+      setContent({
+        after: data.after,
+        posts: mapChildrenToPost(data.children),
+      });
+    });
+  }, []);
 
   return (
     <>
