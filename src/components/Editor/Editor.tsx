@@ -21,7 +21,29 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
     editorRef.current = editor;
     editor.onMouseDown((e) => {
       if (!e.target.element?.classList.contains('detected-link')) return;
-      onLinkClick((e.target.element as HTMLElement).innerText);
+      let url = (e.target.element as HTMLElement).innerText;
+      const result = editor.getModel()?.findNextMatch(
+        url,
+        {
+          column: 0,
+          lineNumber: 0,
+        },
+        false,
+        false,
+        null,
+        false
+      );
+
+      if (result?.range.startLineNumber) {
+        const lineContent = editor
+          .getModel()
+          ?.getLineContent(result.range.startLineNumber);
+
+        if (lineContent) {
+          url = lineContent.split('"')[3];
+        }
+      }
+      onLinkClick(url);
     });
   };
 
@@ -34,6 +56,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
     <>
       <MonacoEditor
         height="100vh"
+        width="100%"
         defaultLanguage="json"
         defaultValue={''}
         theme="vs-dark"
@@ -42,6 +65,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
           wordWrap: 'wordWrapColumn',
           wrappingIndent: 'deepIndent',
         }}
+        loading={<div></div>}
       />
     </>
   );

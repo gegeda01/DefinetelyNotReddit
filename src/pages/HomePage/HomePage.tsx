@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Editor } from '../components';
-import { EditorContent } from '../components/Editor';
-import { Child } from '../types';
+import { Editor } from '../../components';
+import { EditorContent } from '../../components/Editor/Editor';
+import Loader from '../../components/Loader';
+import Toolbox from '../../components/Toolbox/Toolbox';
+import { Child } from '../../types';
 import {
   getApi,
   getPosts,
   GET_POSTS_ENDPOINT,
   REDDIT_BASE_URL
-} from '../utils/reddit';
-import { Skeleton } from '@chakra-ui/react';
+} from '../../utils/reddit';
+import styles from './HomePage.module.css';
 
 const cleanText = (text: string): string => {
   if (!text) return text;
@@ -89,7 +91,6 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLinkClick = (url: string) => {
-    setLoading(true);
     if (url.includes('comments')) {
       fetchComments(url);
     } else {
@@ -98,17 +99,21 @@ const HomePage: React.FC = () => {
   };
 
   const fetchComments = (url: string) => {
+    setLoading(true);
     getApi(url).then((res) => {
       if (res) {
         setLoading(false);
-        setContent(commentsToDisplayData(res))
+        setContent(commentsToDisplayData(res));
+        setLoading(false);
       }
     });
   };
 
   const fetchPosts = (after?: string) => {
+    setLoading(true);
     getPosts(after).then((res) => {
       setContent(postsToDisplayData(res));
+      setLoading(false);
     });
   };
 
@@ -118,8 +123,11 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      {loading && <Skeleton height="2px" startColor="pink.500" endColor="orange.500"/>}
-      <Editor value={content} onLinkClick={handleLinkClick} />
+      <Loader loading={loading} />
+      <div className={styles.container}>
+        <Toolbox />
+        <Editor value={content} onLinkClick={handleLinkClick} />
+      </div>
     </>
   );
 };
