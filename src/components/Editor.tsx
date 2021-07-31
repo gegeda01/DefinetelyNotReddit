@@ -33,6 +33,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
     <>
       <MonacoEditor
         height="100vh"
+        width="100%"
         defaultLanguage="json"
         defaultValue={''}
         theme="vs-dark"
