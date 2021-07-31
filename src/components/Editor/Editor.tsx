@@ -1,5 +1,5 @@
 import MonacoEditor, { Monaco } from '@monaco-editor/react';
-import { CancellationToken, editor, languages } from 'monaco-editor';
+import { editor } from 'monaco-editor';
 import React, { useEffect, useRef } from 'react';
 
 export interface EditorContent {
@@ -54,6 +54,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
 
   return (
     <>
+      {/* <div>Editor</div> */}
       <MonacoEditor
         height="100vh"
         width="100%"

@@ -1,14 +1,11 @@
 import React from 'react';
-import './toolbox.css';
+import styles from './Toolbox.module.css';
 
-export interface ToolboxProps {
-  value?: string;
-}
-const Toolbox: React.FC<ToolboxProps> = ({ value }) => {
+const Toolbox: React.FC = () => {
   return (
     <>
-      <div className="container">
-        <div className="icon">
+      <div className={styles.container}>
+        <div className={styles.icon}>
           <svg
             width="30"
             height="30"
@@ -22,7 +19,7 @@ const Toolbox: React.FC<ToolboxProps> = ({ value }) => {
             />
           </svg>
         </div>
-        <div className="icon2">
+        <div className={styles.icon}>
           <svg
             width="30"
             height="30"
@@ -36,7 +33,7 @@ const Toolbox: React.FC<ToolboxProps> = ({ value }) => {
             />
           </svg>
         </div>
-        <div className="icon3">
+        <div className={styles.icon}>
           <svg
             width="30"
             height="30"
@@ -51,7 +48,7 @@ const Toolbox: React.FC<ToolboxProps> = ({ value }) => {
           </svg>
         </div>
 
-        <div className="icon4">
+        <div className={styles.icon}>
           <svg
             width="30"
             height="30"
@@ -66,7 +63,7 @@ const Toolbox: React.FC<ToolboxProps> = ({ value }) => {
           </svg>
         </div>
 
-        <div className="icon5">
+        <div className={styles.icon}>
           <svg
             width="30"
             height="30"

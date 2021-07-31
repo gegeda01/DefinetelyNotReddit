@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Editor } from '../components';
-import { EditorContent } from '../components/Editor/Editor';
-import Toolbox from '../components/toolbox/Toolbox';
-import { Child } from '../types';
+import { Editor } from '../../components';
+import { EditorContent } from '../../components/Editor/Editor';
+import Toolbox from '../../components/toolbox/Toolbox';
+import { Child } from '../../types';
 import {
   getApi,
   getPosts,
   GET_POSTS_ENDPOINT,
   REDDIT_BASE_URL,
-} from '../utils/reddit';
+} from '../../utils/reddit';
+import styles from './HomePage.module.css';
 
 const cleanText = (text: string): string => {
   if (!text) return text;
@@ -113,7 +114,7 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <Toolbox />
       <Editor value={content} onLinkClick={handleLinkClick} />
     </div>
