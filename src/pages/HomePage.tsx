@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Editor } from '../components';
 import { EditorContent } from '../components/Editor';
 import { Child } from '../types';
@@ -7,7 +6,7 @@ import {
   getApi,
   getPosts,
   GET_POSTS_ENDPOINT,
-  REDDIT_BASE_URL,
+  REDDIT_BASE_URL
 } from '../utils/reddit';
 
 const cleanText = (text: string): string => {
