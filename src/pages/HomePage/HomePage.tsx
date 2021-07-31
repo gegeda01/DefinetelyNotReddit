@@ -1,36 +1,49 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Editor } from '../../components';
 import { EditorContent } from '../../components/Editor/Editor';
 import Loader from '../../components/Loader';
 import Toolbox from '../../components/Toolbox/Toolbox';
 import {
-  createPostsUrl,
   getComments,
   getPosts,
   mapCommentsResponseToPage,
   mapPostResponseToPage,
+  REDDIT_BASE_URL,
 } from '../../utils/reddit';
 import styles from './HomePage.module.css';
 
-interface HomePageParams {
-  subreddit?: string;
-}
+const getSubredditPath = (path: string) => {
+  return path.startsWith('/r/')
+    ? path.replace('/r/', '').split('/')[0]
+    : undefined;
+};
 
 const HomePage: React.FC = () => {
-  const params = useParams<HomePageParams>();
+  const history = useHistory();
+  const location = useLocation();
   const [content, setContent] = useState<EditorContent>({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [subreddit, setSubreddit] = useState<string | undefined>(
-    params.subreddit
+    getSubredditPath(location.pathname)
   );
 
   const handleLinkClick = (url: string) => {
+    fetchDataCallback(url);
+  };
+
+  const fetchData = (url: string) => {
     if (url.includes('comments')) {
-      fetchComments(url);
+      fetchCommentsCallback(url);
     } else {
-      fetchPosts(url);
+      fetchPostsCallback(url);
     }
+
+    const path = url.replace(REDDIT_BASE_URL, '');
+    console.log('path', path);
+    history.push(path);
+
+    setSubreddit(getSubredditPath(location.pathname));
   };
 
   const fetchComments = (url: string) => {
@@ -71,14 +84,22 @@ const HomePage: React.FC = () => {
       .finally(() => setLoading(false));
   };
 
+  const fetchCommentsCallback = useCallback(fetchComments, [subreddit]);
   const fetchPostsCallback = useCallback(fetchPosts, [subreddit]);
 
+  const fetchDataCallback = useCallback(fetchData, [
+    fetchCommentsCallback,
+    fetchPostsCallback,
+    history,
+    location.pathname,
+  ]);
+
   useEffect(() => {
-    const url = createPostsUrl({
-      subreddit,
-    });
-    fetchPostsCallback(url);
-  }, [subreddit, fetchPostsCallback]);
+    const url = `${REDDIT_BASE_URL}${location.pathname}${location.search}`;
+    console.log('url', url);
+    console.log('subreddit', subreddit);
+    fetchDataCallback(url);
+  }, [subreddit, fetchDataCallback, location.search, location.pathname]);
 
   return (
     <>
