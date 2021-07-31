@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Editor } from '../components';
-import { EditorContent } from '../components/Editor';
+import { EditorContent } from '../components/Editor/Editor';
+import Toolbox from '../components/toolbox/Toolbox';
 import { getComments, getPosts, REDDIT_BASE_URL } from '../utils/reddit';
-import Toolbox from '../components/toolbox';
 
 const mapChildrenToPost = (children: any[]) => {
   return children
@@ -33,9 +33,8 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="container">
-      <Toolbox></Toolbox>
+      <Toolbox />
       <Editor value={content} onLinkClick={handleLinkClick} />
-
     </div>
   );
 };
