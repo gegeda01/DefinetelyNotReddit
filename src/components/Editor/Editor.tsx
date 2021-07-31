@@ -48,7 +48,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
   };
 
   useEffect(() => {
-    editorRef.current?.getModel()?.setValue(JSON.stringify(value, null, 2));
+    // editorRef.current?.getModel()?.setValue(JSON.stringify(value, null, 2));
     editorRef.current?.setScrollTop(0);
   }, [value]);
 
@@ -66,6 +66,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
           wrappingIndent: 'deepIndent',
         }}
         loading={<div></div>}
+        value={JSON.stringify(value, null, 2)}
       />
     </>
   );
