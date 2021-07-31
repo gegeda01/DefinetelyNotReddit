@@ -6,7 +6,7 @@ import {
   getApi,
   getPosts,
   GET_POSTS_ENDPOINT,
-  REDDIT_BASE_URL
+  REDDIT_BASE_URL,
 } from '../utils/reddit';
 
 const cleanText = (text: string): string => {
@@ -87,6 +87,7 @@ const HomePage: React.FC = () => {
   const [content, setContent] = useState<EditorContent>({});
 
   const handleLinkClick = (url: string) => {
+    console.log(url);
     if (url.includes('comments')) {
       fetchComments(url);
     } else {
