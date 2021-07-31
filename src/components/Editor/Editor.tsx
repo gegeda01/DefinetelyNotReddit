@@ -54,7 +54,6 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
 
   return (
     <>
-      {/* <div>Editor</div> */}
       <MonacoEditor
         height="100vh"
         width="100%"
@@ -66,6 +65,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
           wordWrap: 'wordWrapColumn',
           wrappingIndent: 'deepIndent',
         }}
+        loading={null}
       />
     </>
   );
