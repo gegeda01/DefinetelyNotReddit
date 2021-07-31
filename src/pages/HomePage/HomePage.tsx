@@ -29,7 +29,8 @@ const HomePage: React.FC = () => {
   );
 
   const handleLinkClick = (url: string) => {
-    fetchDataCallback(url);
+    const path = url.replace(REDDIT_BASE_URL, '');
+    history.push(path);
   };
 
   const fetchData = (url: string) => {
@@ -38,12 +39,6 @@ const HomePage: React.FC = () => {
     } else {
       fetchPostsCallback(url);
     }
-
-    const path = url.replace(REDDIT_BASE_URL, '');
-    console.log('path', path);
-    history.push(path);
-
-    setSubreddit(getSubredditPath(location.pathname));
   };
 
   const fetchComments = (url: string) => {
@@ -90,16 +85,18 @@ const HomePage: React.FC = () => {
   const fetchDataCallback = useCallback(fetchData, [
     fetchCommentsCallback,
     fetchPostsCallback,
-    history,
-    location.pathname,
   ]);
 
   useEffect(() => {
     const url = `${REDDIT_BASE_URL}${location.pathname}${location.search}`;
-    console.log('url', url);
-    console.log('subreddit', subreddit);
     fetchDataCallback(url);
-  }, [subreddit, fetchDataCallback, location.search, location.pathname]);
+  }, [
+    subreddit,
+    fetchDataCallback,
+    location.search,
+    location.pathname,
+    history,
+  ]);
 
   return (
     <>

@@ -203,7 +203,11 @@ const mapCommentToPageComment = (comment: RedditApiComment): CommentEntry => {
   };
 
   if (data.replies) {
-    pageComment.replies = mapCommentsToPageComment(data.replies.data.children);
+    const replies = mapCommentsToPageComment(data.replies.data.children);
+
+    if (replies.length) {
+      pageComment.replies = replies;
+    }
   }
 
   return pageComment;
