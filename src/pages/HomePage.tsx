@@ -8,6 +8,7 @@ import {
   GET_POSTS_ENDPOINT,
   REDDIT_BASE_URL
 } from '../utils/reddit';
+import { Skeleton } from '@chakra-ui/react';
 
 const cleanText = (text: string): string => {
   if (!text) return text;
@@ -85,8 +86,10 @@ const commentsToDisplayData = (response: any) => {
 
 const HomePage: React.FC = () => {
   const [content, setContent] = useState<EditorContent>({});
+  const [loading, setLoading] = useState(false);
 
   const handleLinkClick = (url: string) => {
+    setLoading(true);
     if (url.includes('comments')) {
       fetchComments(url);
     } else {
@@ -96,7 +99,10 @@ const HomePage: React.FC = () => {
 
   const fetchComments = (url: string) => {
     getApi(url).then((res) => {
-      setContent(commentsToDisplayData(res));
+      if (res) {
+        setLoading(false);
+        setContent(commentsToDisplayData(res))
+      }
     });
   };
 
@@ -112,6 +118,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
+      {loading && <Skeleton height="2px" startColor="pink.500" endColor="orange.500"/>}
       <Editor value={content} onLinkClick={handleLinkClick} />
     </>
   );
