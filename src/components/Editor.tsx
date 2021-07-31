@@ -27,6 +27,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
 
   useEffect(() => {
     editorRef.current?.getModel()?.setValue(JSON.stringify(value, null, 2));
+    editorRef.current?.setScrollTop(0);
   }, [value]);
 
   return (
@@ -37,6 +38,10 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
         defaultValue={''}
         theme="vs-dark"
         onMount={handleEditorMount}
+        options={{
+          wordWrap: 'wordWrapColumn',
+          wrappingIndent: 'deepIndent',
+        }}
       />
     </>
   );
