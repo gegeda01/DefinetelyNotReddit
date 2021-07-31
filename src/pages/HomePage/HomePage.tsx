@@ -98,12 +98,19 @@ const HomePage: React.FC = () => {
     history,
   ]);
 
+  let editorContent = content;
+  if (loading) {
+    editorContent = {
+      loading: 'true',
+    };
+  }
+
   return (
     <>
       <Loader loading={loading} />
       <div className={styles.container}>
         <Toolbox />
-        <Editor value={content} onLinkClick={handleLinkClick} />
+        <Editor value={editorContent} onLinkClick={handleLinkClick} />
       </div>
     </>
   );
