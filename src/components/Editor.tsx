@@ -8,9 +8,10 @@ export interface EditorContent {
 
 export interface EditorProps {
   value: EditorContent;
+  onLinkClick: (url: string) => void;
 }
 
-const Editor: React.FC<EditorProps> = ({ value }) => {
+const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [content, setContent] = useState<EditorContent>({});
 
@@ -19,6 +20,10 @@ const Editor: React.FC<EditorProps> = ({ value }) => {
     monaco: Monaco
   ) => {
     editorRef.current = editor;
+    editor.onMouseDown((e) => {
+      if (!e.target.element?.classList.contains('detected-link')) return;
+      onLinkClick((e.target.element as HTMLElement).innerText);
+    });
     // console.log(editor.getModel()?.getValue());
     // editor.getModel()?.setValue('Hello World!');
   };
