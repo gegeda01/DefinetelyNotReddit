@@ -70,6 +70,7 @@ const Chat: React.FC = () => {
         onInput={handleInput}
         onKeyDown={handleKeyDown}
         value={value}
+        backgroundColor="#333"
       />
     </>
   );
