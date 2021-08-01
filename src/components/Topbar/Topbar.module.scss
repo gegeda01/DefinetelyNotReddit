@@ -1,0 +1,37 @@
+.container {
+    background-color: rgb(63, 62, 62);
+    width: 100%;
+    min-height: 25px;
+    height: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .text-wrapper {
+    &.selected {
+      border-left: 3px solid white;
+      color: white;
+      padding: 15px 0;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+  
+      .text {
+        padding: 0;
+      }
+    }
+  }
+
+  .text {
+    text-align: center;
+    float: left;
+    position: relative;
+    opacity: 0.6;
+    color: white;
+    padding: 15px;
+    
+    &:hover {
+      opacity: 0;
+      cursor: pointer;
+    }
+  }

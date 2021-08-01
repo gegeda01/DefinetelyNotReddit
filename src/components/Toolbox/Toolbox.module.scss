@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
 .icon-wrapper {
@@ -33,7 +34,11 @@
   }
 }
 
-.icon:nth-last-of-type(2){
-  justify-content: flex-end;
-  margin-top: 300px;
+.flex-column {
+  display: flex;
+  flex-direction: column;
+
+  .raise {
+    padding-bottom: 50px;
+  }
 }

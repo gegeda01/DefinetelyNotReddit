@@ -4,6 +4,7 @@ import { Chat, Editor } from '../../components';
 import { EditorContent } from '../../components/Editor/Editor';
 import Loader from '../../components/Loader';
 import Toolbox from '../../components/Toolbox/Toolbox';
+import Topbar from '../../components/Topbar/Topbar';
 import {
   getComments,
   getPosts,
@@ -108,14 +109,13 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Loader loading={loading} />
-      <div className={styles.container}>
-        <Toolbox />
-        <Editor
-          value={editorContent}
-          onLinkClick={handleLinkClick}
-          minimap
-        />
-        <Chat />
+      <div className={styles.vertical}>
+        <Topbar />
+        <div className={styles.container}>
+          <Toolbox />
+          <Editor value={editorContent} onLinkClick={handleLinkClick} minimap />
+          <Chat />
+        </div>
       </div>
     </>
   );
