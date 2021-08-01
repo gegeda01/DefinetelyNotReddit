@@ -17,6 +17,8 @@ export interface EditorProps {
   ) => void;
   width?: string;
   scrollWithContent?: boolean;
+  minimap?: boolean;
+  readOnly?: boolean;
 }
 
 const Editor: React.FC<EditorProps> = ({
@@ -26,6 +28,8 @@ const Editor: React.FC<EditorProps> = ({
   onChange,
   width,
   scrollWithContent,
+  minimap,
+  readOnly,
 }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
@@ -73,7 +77,7 @@ const Editor: React.FC<EditorProps> = ({
   useEffect(() => {
     if (scrollWithContent) {
       const lineCount = editorRef.current?.getModel()?.getLineCount() || 0;
-      editorRef.current?.revealLineInCenterIfOutsideViewport(lineCount);
+      editorRef.current?.revealLineInCenter(lineCount);
     } else {
       editorRef.current?.setScrollTop(0);
     }
@@ -91,6 +95,10 @@ const Editor: React.FC<EditorProps> = ({
         options={{
           wordWrap: 'wordWrapColumn',
           wrappingIndent: 'deepIndent',
+          minimap: {
+            enabled: minimap,
+          },
+          readOnly,
         }}
         onChange={handleEditorChange}
         loading={<div></div>}

@@ -110,7 +110,11 @@ const HomePage: React.FC = () => {
       <Loader loading={loading} />
       <div className={styles.container}>
         <Toolbox />
-        <Editor value={editorContent} onLinkClick={handleLinkClick} />
+        <Editor
+          value={editorContent}
+          onLinkClick={handleLinkClick}
+          minimap
+        />
         <Chat />
       </div>
     </>
