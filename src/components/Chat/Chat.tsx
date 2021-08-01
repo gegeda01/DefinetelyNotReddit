@@ -10,7 +10,7 @@ const Chat: React.FC = () => {
   useEffect(() => {
     const timeout = setInterval(() => {
       setMessages((prev) => [...prev, new Date().toISOString()]);
-    }, 1000);
+    }, 200);
     return () => clearInterval(timeout);
   }, []);
 
@@ -21,6 +21,7 @@ const Chat: React.FC = () => {
         onLinkClick={() => null}
         language="yaml"
         width="50%"
+        scrollWithContent
       ></Editor>
     </>
   );

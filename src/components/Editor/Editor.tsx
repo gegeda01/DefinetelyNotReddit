@@ -16,6 +16,7 @@ export interface EditorProps {
     editor: editor.IStandaloneCodeEditor
   ) => void;
   width?: string;
+  scrollWithContent?: boolean;
 }
 
 const Editor: React.FC<EditorProps> = ({
@@ -24,6 +25,7 @@ const Editor: React.FC<EditorProps> = ({
   language,
   onChange,
   width,
+  scrollWithContent,
 }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
@@ -69,9 +71,13 @@ const Editor: React.FC<EditorProps> = ({
   };
 
   useEffect(() => {
-    // editorRef.current?.getModel()?.setValue(JSON.stringify(value, null, 2));
-    editorRef.current?.setScrollTop(0);
-  }, [value]);
+    if (scrollWithContent) {
+      const lineCount = editorRef.current?.getModel()?.getLineCount() || 0;
+      editorRef.current?.revealLineInCenterIfOutsideViewport(lineCount);
+    } else {
+      editorRef.current?.setScrollTop(0);
+    }
+  }, [value, scrollWithContent]);
 
   return (
     <>
