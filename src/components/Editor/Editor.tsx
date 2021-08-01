@@ -8,7 +8,7 @@ export interface EditorContent {
 
 export interface EditorProps {
   value: EditorContent;
-  onLinkClick: (url: string) => void;
+  onLinkClick?: (url: string) => void;
 }
 
 const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
@@ -43,7 +43,7 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
           url = lineContent.split('"')[3];
         }
       }
-      onLinkClick(url);
+      onLinkClick?.(url);
     });
   };
 

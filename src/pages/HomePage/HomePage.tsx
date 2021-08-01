@@ -86,6 +86,10 @@ const commentsToDisplayData = (response: any) => {
   };
 };
 
+const code = {
+
+}
+
 const HomePage: React.FC = () => {
   const [content, setContent] = useState<EditorContent>({});
   const [loading, setLoading] = useState(false);
@@ -126,7 +130,10 @@ const HomePage: React.FC = () => {
       <Loader loading={loading} />
       <div className={styles.container}>
         <Toolbox />
-        <Editor value={content} onLinkClick={handleLinkClick} />
+        <div>
+          <Editor value={content} onLinkClick={handleLinkClick} />
+          <Editor value={code}></Editor>
+        </div>
       </div>
     </>
   );
