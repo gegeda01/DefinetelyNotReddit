@@ -145,9 +145,15 @@ const HomePage: React.FC = () => {
         <Topbar />
         <div className={styles.container}>
           <Toolbox />
-          {!showRealCode && <Editor value={editorContent} onLinkClick={handleLinkClick} minimap />}
-        {showRealCode && <Editor value={code} language="typescript" />}
-        <Chat />
+          {!showRealCode && (
+            <Editor
+              value={editorContent}
+              onLinkClick={handleLinkClick}
+              minimap
+            />
+          )}
+          {showRealCode && <Editor value={code} language="typescript" />}
+          <Chat />
         </div>
       </div>
     </>
