@@ -16,6 +16,9 @@ export interface EditorProps {
     editor: editor.IStandaloneCodeEditor
   ) => void;
   width?: string;
+  scrollWithContent?: boolean;
+  minimap?: boolean;
+  readOnly?: boolean;
 }
 
 const Editor: React.FC<EditorProps> = ({
@@ -24,6 +27,9 @@ const Editor: React.FC<EditorProps> = ({
   language,
   onChange,
   width,
+  scrollWithContent,
+  minimap,
+  readOnly,
 }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
@@ -69,9 +75,13 @@ const Editor: React.FC<EditorProps> = ({
   };
 
   useEffect(() => {
-    // editorRef.current?.getModel()?.setValue(JSON.stringify(value, null, 2));
-    editorRef.current?.setScrollTop(0);
-  }, [value]);
+    if (scrollWithContent) {
+      const lineCount = editorRef.current?.getModel()?.getLineCount() || 0;
+      editorRef.current?.revealLineInCenter(lineCount);
+    } else {
+      editorRef.current?.setScrollTop(0);
+    }
+  }, [value, scrollWithContent]);
 
   return (
     <>
@@ -85,6 +95,10 @@ const Editor: React.FC<EditorProps> = ({
         options={{
           wordWrap: 'wordWrapColumn',
           wrappingIndent: 'deepIndent',
+          minimap: {
+            enabled: minimap,
+          },
+          readOnly,
         }}
         onChange={handleEditorChange}
         loading={<div></div>}

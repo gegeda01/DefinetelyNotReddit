@@ -105,17 +105,16 @@ const HomePage: React.FC = () => {
     };
   }
 
-  const code = {}
-
   return (
     <>
       <Loader loading={loading} />
       <div className={styles.container}>
         <Toolbox />
-        <div>
-        <Editor value={editorContent} onLinkClick={handleLinkClick} />
-        <Editor value={code}/>
-        </div>
+        <Editor
+          value={editorContent}
+          onLinkClick={handleLinkClick}
+          minimap
+        />
         <Chat />
       </div>
     </>
