@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { Editor } from '../../components';
+import { Chat, Editor } from '../../components';
 import { EditorContent } from '../../components/Editor/Editor';
 import Loader from '../../components/Loader';
 import Toolbox from '../../components/Toolbox/Toolbox';
@@ -111,6 +111,7 @@ const HomePage: React.FC = () => {
       <div className={styles.container}>
         <Toolbox />
         <Editor value={editorContent} onLinkClick={handleLinkClick} />
+        <Chat />
       </div>
     </>
   );
