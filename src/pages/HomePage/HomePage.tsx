@@ -13,6 +13,30 @@ import {
 } from '../../utils/reddit';
 import styles from './HomePage.module.css';
 
+const code =
+  "import React from 'react';\n" +
+  "import ReactDOM from 'react-dom';\n" +
+  "import './index.scss';\n" +
+  "import { Router } from './pages';\n" +
+  "import { ChakraProvider, ThemeConfig } from '@chakra-ui/react';\n" +
+  "import { extendTheme } from '@chakra-ui/react';\n" +
+  '\n' +
+  'const config: ThemeConfig = {\n' +
+  "  initialColorMode: 'dark',\n" +
+  '  useSystemColorMode: false,\n' +
+  '};\n' +
+  '\n' +
+  'const theme = extendTheme({ config });\n' +
+  '\n' +
+  'ReactDOM.render(\n' +
+  '  <React.StrictMode>\n' +
+  '    <ChakraProvider theme={theme}>\n' +
+  '      <Router />\n' +
+  '    </ChakraProvider>\n' +
+  '  </React.StrictMode>,\n' +
+  "  document.getElementById('root')\n" +
+  ');\n';
+
 const getSubredditPath = (path: string) => {
   return path.startsWith('/r/')
     ? path.replace('/r/', '').split('/')[0]
@@ -27,6 +51,7 @@ const HomePage: React.FC = () => {
   const [subreddit, setSubreddit] = useState<string | undefined>(
     getSubredditPath(location.pathname)
   );
+  const [showRealCode, setShowRealCode] = useState(false);
 
   const handleLinkClick = (url: string) => {
     const path = url.replace(REDDIT_BASE_URL, '');
@@ -105,16 +130,22 @@ const HomePage: React.FC = () => {
     };
   }
 
+  document.addEventListener('keydown', (event) => {
+    if (event.code === 'Tab') {
+      setShowRealCode(!showRealCode);
+      console.log('Tag');
+    }
+  });
+
   return (
     <>
       <Loader loading={loading} />
       <div className={styles.container}>
         <Toolbox />
-        <Editor
-          value={editorContent}
-          onLinkClick={handleLinkClick}
-          minimap
-        />
+        {!showRealCode && (
+          <Editor value={editorContent} onLinkClick={handleLinkClick} minimap />
+        )}
+        {showRealCode && <Editor value={code} language="typescript" />}
         <Chat />
       </div>
     </>
