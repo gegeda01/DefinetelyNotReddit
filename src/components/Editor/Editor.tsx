@@ -7,11 +7,24 @@ export interface EditorContent {
 }
 
 export interface EditorProps {
-  value: EditorContent;
+  value: EditorContent | string;
   onLinkClick?: (url: string) => void;
+  language?: string;
+  onChange?: (
+    value: string | undefined,
+    e: editor.IModelContentChangedEvent,
+    editor: editor.IStandaloneCodeEditor
+  ) => void;
+  width?: string;
 }
 
-const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
+const Editor: React.FC<EditorProps> = ({
+  value,
+  onLinkClick,
+  language,
+  onChange,
+  width,
+}) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   const handleEditorMount = (
@@ -47,8 +60,16 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
     });
   };
 
+  const handleEditorChange = (
+    value: string | undefined,
+    ev: editor.IModelContentChangedEvent
+  ) => {
+    if (!editorRef.current) return;
+    onChange?.(value, ev, editorRef.current);
+  };
+
   useEffect(() => {
-    editorRef.current?.getModel()?.setValue(JSON.stringify(value, null, 2));
+    // editorRef.current?.getModel()?.setValue(JSON.stringify(value, null, 2));
     editorRef.current?.setScrollTop(0);
   }, [value]);
 
@@ -56,8 +77,8 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
     <>
       <MonacoEditor
         height="100vh"
-        width="100%"
-        defaultLanguage="json"
+        width={width || '100%'}
+        defaultLanguage={language || 'json'}
         defaultValue={''}
         theme="vs-dark"
         onMount={handleEditorMount}
@@ -65,7 +86,11 @@ const Editor: React.FC<EditorProps> = ({ value, onLinkClick }) => {
           wordWrap: 'wordWrapColumn',
           wrappingIndent: 'deepIndent',
         }}
+        onChange={handleEditorChange}
         loading={<div></div>}
+        value={
+          typeof value === 'string' ? value : JSON.stringify(value, null, 2)
+        }
       />
     </>
   );

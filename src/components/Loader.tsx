@@ -11,7 +11,7 @@ const Loader: React.FC<LoaderProps> = ({ loading }) => {
       <Skeleton
         startColor="blue.500"
         endColor="gray.700"
-        h="1px"
+        h="2px"
         w="100vw"
         position="fixed"
         left="0"

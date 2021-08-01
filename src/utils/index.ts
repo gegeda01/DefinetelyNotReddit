@@ -1,1 +1,3 @@
-export {};
+import { cleanText } from './text';
+
+export { cleanText };
