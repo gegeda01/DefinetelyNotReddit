@@ -1,4 +1,4 @@
-#WDCC x SESA Hackathon 
+# WDCC x SESA Hackathon 
 
 At the hackathon we were tasked to create a solution to encourage users to procrastinate. 
 We decided to create a webapp that looks very similar to Visual Studio Code. 
