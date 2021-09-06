@@ -3,6 +3,7 @@
 At the hackathon we were tasked to create a solution to encourage users to procrastinate. 
 We decided to create a webapp that looks very similar to Visual Studio Code. 
 If you look closely at the code, you will realise that it's actually populated with reddit posts! 
+This way you can freely browse through reddit even in front of your boss and you will never get caught. 
 
 # Getting Started with Create React App
 
