@@ -52,4 +52,4 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-**Click [this](https://definetely-not-reddit.netlify.app/) to access the website :)
+#Click [this](https://definetely-not-reddit.netlify.app/) to access the website :)
